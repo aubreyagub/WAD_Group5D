@@ -1,0 +1,34 @@
+{% extends 'rango/base.html' %}
+ {%load staticfiles %}
+
+{% block title_block %}
+ 	About Rango
+ {% endblock %}
+
+{%block body_block%}
+<div class="about-section">
+    <div class="container">
+        <div class="content-section">
+            <div class="title">
+                <h1>About Us</h1>
+            </div>
+            <div class="content">
+                <p>Our restaurant has a rich and fascinating history that is deeply intertwined with the local community. It all began nearly a century ago, when the building that now houses our restaurant was originally constructed. Over the years, the building has been home to a variety of businesses, from a hardware store to a printing press. But it wasn't until the 1970s that it became a restaurant.</p>
+                <p>The restaurant was founded by a local couple who wanted to bring something new and exciting to the dining scene in our city. They drew inspiration from their travels around the world, creating a menu that featured flavors and ingredients from a variety of cultures. The restaurant quickly became a hit with locals and visitors alike, known for its delicious food and warm, inviting atmosphere.</p>
+                <p>Over the years, the restaurant changed hands several times, with each new owner adding their own unique touch to the menu and décor. But one thing remained constant - the restaurant's commitment to exceptional food and hospitality. Today, we are proud to carry on that tradition, with a menu that showcases the best of local and international cuisine and a staff that is dedicated to providing our guests with an unforgettable dining experience.</p>
+                <p>As we look to the future, we are excited to continue to grow and evolve as a restaurant, while staying true to the values that have made us a beloved part of the community for so many years. We are committed to sustainability, using locally-sourced ingredients whenever possible, and providing our guests with an exceptional dining experience that they will remember for years to come.                </p>
+           </div>
+           <div class="social">
+            <a href="https://www.facebook.com/UkraineUA.MFA/"><i class="fa fa-facebook fa-2x"></i></a>
+            <a href="https://www.instagram.com/ukraine/?hl=en"><i class="fa fa-instagram fa-2x"></i></a>
+            <a href="https://twitter.com/Ukraine"><i class="fa fa-twitter fa-2x"></i></a>
+        </div>
+        </div>
+        <div class="image-section">
+            <img src="{% static 'images/about_photo.jpeg' %}" /><br />
+        </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

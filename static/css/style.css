@@ -1,0 +1,229 @@
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rokkitt:wght@200&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body h1{
+    font-family: 'PT Serif', serif;
+}
+body p{
+   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   font-size: 18px;
+   line-height: 1.5;
+}
+/*--------------GENERAL (for all pages)------------------*/
+/*------Navigation bar---------*/
+nav{
+    background-color: #140f04;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    font-family: 'PT Serif', serif;
+    text-decoration: none;
+}
+nav a{
+    color: #fff;
+}
+nav a:hover{
+    color: #EDC270;
+}
+ .logo img{
+    width: 90px;
+    margin-left: 10px;
+}
+.menu{
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+.menu li{
+    padding: 15px 10px;
+    font-size: 16px;
+}
+.toogle{
+    font-size: 30px;
+    display: none;
+}
+.mainlogo img{
+    height: 50%; 
+    display: inline-block;
+    margin-top: 5%;
+    margin-left: 30%;
+    margin-right: 30%;
+    opacity: 0.2;
+    z-index: 3;
+    position: absolute;
+}
+
+/*----------Footer-------------*/
+footer {
+    position: relative;
+    margin-top: 30%;
+    background-color: #777;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    }
+
+/*-------------------HOME page-------------------*/
+/*------Background image-------*/
+#bg{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+/*-----------Vertical sidebar (menu)-----------*/
+.vertical-menu {
+width: 200px;
+margin-top: 20px;
+position: relative;
+z-index: 10;
+}
+
+.vertical-menu a {
+background-color: #eee;
+color: black;
+display: block;
+padding: 12px;
+text-decoration: none;
+}
+
+.vertical-menu a:hover {
+background-color: #ccc;
+}
+
+.vertical-menu a.active {
+background-color: black;
+color: white;
+}
+
+/*-----------Searchbar-----------*/
+.search-wrapper{
+    height: 60vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.search-wrapper img{
+    margin-top: 10px;
+    width: 380px;
+}
+.search-container{
+    width: 40%;
+    position:absolute;
+    top:55%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.search-box{
+    width:100%;
+    position: relative;
+    display: flex;
+}
+
+.search{
+    width:100%;
+    border:3px solid rgb(178, 134, 22);
+    border-right: none;
+    padding: 5px;
+    height: 36px;
+    outline:none;
+    color: #735411;
+    font-size: 20px;
+
+}
+
+.search:focus{
+    color:#140f04;
+    box-shadow: 0 0 5px rgb(178, 134, 22);
+}
+
+.search-btn{
+    width:40px;
+    height:36px;
+    border:1px solid rgb(178, 134, 22);
+    background: rgb(178, 134, 22);
+    text-align: center;
+    color:#3f3216;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/*-----------ABOUT page------------*/
+.about-section{
+    width: 100%;
+    min-height: 100vh;
+    background-color: white;
+}
+.container{
+    width: 80%;
+    display: block;
+    margin: auto;
+    padding-top: 100px;
+}
+.content-section{
+    float: left;
+    width: 55%;
+}
+.image-section{
+    float:right;
+    width: 40%;
+}
+.image-section img{
+    width:  100%;
+    height:auto;
+}
+.content-section .title{
+    text-transform: uppercase;
+    font-size: 28px;
+}
+.content-section .content p{
+    margin-top: 10px;
+}
+.content-section .social{
+    margin: 30px 30px;
+}
+.content-section .social i{
+    color:#140f04;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+.content-section .social i:hover{
+    color:#EDC270;
+
+}
+@media screen and (max-width:768px){
+    .container{
+        width: 80%;
+        display: block;
+        margin: auto;
+        padding-top: 50px;
+    }
+    .content-section{
+        float: none;
+        width:100%;
+        display: block;
+        margin: auto;
+
+    }
+    .image-section{
+        float: none;
+        width: 100%;
+    }
+    .image-section img{
+        width: 100%;
+        height: auto;
+        display:block;
+        margin: auto;
+    }
+    .content-section .social{
+        text-align: center;
+    }
+}
+
+

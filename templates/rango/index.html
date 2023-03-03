@@ -1,0 +1,79 @@
+
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Homepage
+    {% endblock %}
+
+{% block body_block %}
+
+    <body>
+
+    <!-- <div class="vertical-menu">
+        <a href="#" class="active">Menu</a>
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+        <a href="#">Link 4</a>
+      </div> -->
+
+      <section class="search-wrapper">
+        <img class="search-logo"src="{% static 'images/back_logo.png' %}"alt="logo">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search" 
+                placeholder="What are you looking for?" >
+                <button type="submit"class="search-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+      </section>
+
+   <!-- <footer>
+   
+        <h1>Rango says...</h1>
+        <div>
+            {% if user.is_authenticated %}
+ 			howdy {{ user.username }}! <br />
+ 		{% else %}
+ 			hey there partner! <br />
+ 		{% endif %}
+            <strong>{{ boldmessage }}</strong><br />
+        </div>
+
+        <div>
+            <h2>Most Liked Categories</h2>
+        {% if categories %}
+            <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="{% url 'rango:show_category' category.slug %}"> {{ category.name }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+        </div>
+
+        <div>
+            <h2>Most Viewed Pages</h2>
+        {% if pages %}
+            <ul>
+            {% for page in pages %}
+                <li>
+                    <a href="{{ page.url}}">{{ page.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no pages present.</strong>
+        {% endif %}
+        </div>
+    
+</body>
+{% endblock %}
+

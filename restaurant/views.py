@@ -1,12 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from restaurant.models import Category
-from restaurant.models import Page
-from restaurant.forms import CategoryForm
-from restaurant.forms import PageForm
+from restaurant.models import Category, Page, Comment, MenuItem
+from restaurant.forms import CategoryForm, PageForm, UserForm, UserProfileForm, CommentForm, MenuItemForm
 from django.shortcuts import redirect
 from django.urls import reverse
-from restaurant.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -43,6 +40,22 @@ def show_category(request, category_name_slug):
         context_dict['pages'] = None
 
     return render(request, 'rango/category.html', context=context_dict)
+
+def show_menu(request):
+    context_dict = {}
+    menu_list = MenuItem.objects.order_by('name')
+    context_dict['menu_list'] = menu_list
+    return render(request, 'rango/menu.html', context=context_dict)
+
+def show_menu_item(request, menu_item_name_slug):
+    context_dict = {}
+    try:
+        menu_item = MenuItem.objects.get(slug=menu_item_name_slug)
+        context_dict['menu_item'] = menu_item
+    except MenuItem.DoesNotExist:
+        context_dict['menu_item'] = None
+
+    return render(request, 'rango/menu_item.html', context=context_dict)
 
 @login_required
 def add_category(request):
@@ -90,6 +103,51 @@ def add_page(request, category_name_slug):
     context_dict = {'form': form, 'category': category}
     return render(request, 'rango/add_page.html', context=context_dict)
 
+@login_required
+def add_menu_item(request):
+    form = MenuItemForm()
+
+    if request.method == 'POST':
+        form = MenuItemForm(request.POST)
+
+        if form.is_valid():
+            menu_item = form.save(commit=True)
+            if 'picture' in request.FILES:
+                 menu_item.picture = request.FILES['picture']
+            menu_item.save()
+            return redirect('/rango/')
+        else:
+            print(form.errors)
+
+    return render(request, 'rango/add_menu_item.html', {'form': form})
+
+@login_required
+def add_comment(request, menu_item_name_slug):
+    try:
+        menu_item = MenuItem.objects.get(slug=menu_item_name_slug)
+    except MenuItem.DoesNotExist:
+        menu_item = None
+
+    if menu_item is None:
+        return redirect('/rango/')
+    
+    form = CommentForm()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=True)
+            if 'picture' in request.FILES:
+                 comment.picture = request.FILES['picture']
+            comment.save()
+            return redirect('/rango/')
+
+        else:
+            print(form.errors)
+
+    return render(request, 'rango/add_comment.html', {'form': form})
+
 def register(request):
      registered = False
 
@@ -120,37 +178,6 @@ def register(request):
          profile_form = UserProfileForm()
 
      return render(request, 'rango/register.html',context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
-
-# def register(request):
-#      registered = False
-
-#      if request.method == 'POST':
-#          user_form = UserForm(request.POST)
-#          profile_form = UserProfileForm(request.POST)
-
-#          if user_form.is_valid() and profile_form.is_valid():
-#              user = user_form.save()
-
-#              user.set_password(user.password)
-#              user.save()
-
-#              profile = profile_form.save(commit=False)
-#              profile.user = user
-
-#              if 'picture' in request.FILES:
-#                  profile.picture = request.FILES['picture']
-
-#              profile.save()
-
-#              registered = True
-#          else:
-#              print(user_form.errors, profile_form.errors)
-
-#      else:
-#          user_form = UserForm()
-#          profile_form = UserProfileForm()
-
-#      return render(request, 'rango/register.html',context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 def user_login(request):
     if request.method== 'POST':

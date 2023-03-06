@@ -1,0 +1,29 @@
+{% extends 'rango/base.html' %}
+ {% load staticfiles %}
+
+{% block title_block %}
+    Add a Menu Item
+    {% endblock %}
+
+{% block body_block%}
+    <h1>Add a Menu Item</h1>
+    <div>
+        <form id="menu_item_form" method="post" action="/rango/add_menu_item/" enctype="multipart/form-data">
+            <br />
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                <br />
+                    {{ field.errors }}
+                    {{ field.help_text }}
+                    {{ field }}
+                <br/>
+                {% endfor %}
+            <br/>
+            <input type="submit" name="submit" value="Create a menu item" />
+        </form>
+    </div>
+    
+{%endblock%}

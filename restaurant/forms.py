@@ -1,5 +1,5 @@
 from django import forms
-from restaurant.models import Page, Category
+from restaurant.models import Page, Category, Comment, MenuItem
 from django.contrib.auth.models import User
 from restaurant.models import UserProfile
 
@@ -31,12 +31,33 @@ class PageForm(forms.ModelForm):
              cleaned_data['url'] = url
 
          return cleaned_data
+     
+class MenuItemForm(forms.ModelForm):
+    title = forms.CharField(max_length=MenuItem.TITLE_MAX_LENGTH, help_text="Menu item name:")
+    description = forms.CharField(max_length=MenuItem.DESCRIPTION_MAX_LENGTH, help_text="Menu item description:")
+    ratings = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    comments = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = Comment
+        fields = ('title', 'description', 'picture',)
+
+class CommentForm(forms.ModelForm):
+    title = forms.CharField(max_length=Comment.TITLE_MAX_LENGTH, help_text="Comment title:")
+    comment = forms.CharField(max_length=Comment.COMMENT_MAX_LENGTH, help_text="Write comment:")
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = Comment
+        fields = ('title', 'comment','picture',)
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
         fields = ('username', 'email', 'password',)
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile

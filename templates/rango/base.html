@@ -20,11 +20,11 @@
                 <li><a href="{% url 'rango:about' %}" style="text-decoration: none;">About</a></li>
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'rango:restricted' %}" style="text-decoration: none;">Restricted Page</a></li>
-                <li><a href="{% url 'rango:logout' %}" style="text-decoration: none;">Logout</a></li>
+                <li><a href="{% url 'auth_logout' %}?next={% url 'rango:index '%}" style="text-decoration: none;">Logout</a></li>
                 <li><a href="{% url 'rango:add_category' %}" style="text-decoration: none;">Add Category</a></li>
                 {% else %}
-                <li><a href="{% url 'rango:register' %}" style="text-decoration: none;">Sign Up</a></li>
-                <li><a href="{% url 'rango:login' %}" style="text-decoration: none;">Login</a></li>
+                <li><a href="{% url 'registration_register' %}" style="text-decoration: none;">Sign Up</a></li>
+                <li><a href="{% url 'auth_login' %}" style="text-decoration: none;">Login</a></li>
             {% endif %}
             </ul>
         </nav>
@@ -33,7 +33,7 @@
          <title>
              Rango -
              {% block title_block %}
-                 How to Tango with Django!
+                 Welcome to our Restaurant!
              {% endblock %}
          </title>
      </head>

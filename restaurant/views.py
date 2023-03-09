@@ -21,14 +21,14 @@ def index(request):
     context_dict['pages'] = pages_list
 
     visitor_cookie_handler(request)
-    response = render(request, 'rango/index.html', context=context_dict)
+    response = render(request, 'restaurant/index.html', context=context_dict)
     return response
 
 def about(request):
     context_dict = {'boldmessage': 'This tutorial has been put together by Anastasiia'}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
-    return render(request, 'rango/about.html', context=context_dict)
+    return render(request, 'restaurant/about.html', context=context_dict)
 
 
 def show_category(request, category_name_slug):
@@ -42,7 +42,7 @@ def show_category(request, category_name_slug):
         context_dict['category'] = None
         context_dict['pages'] = None
 
-    return render(request, 'rango/category.html', context=context_dict)
+    return render(request, 'restaurant/category.html', context=context_dict)
 
 @login_required
 def add_category(request):
@@ -54,11 +54,11 @@ def add_category(request):
         if form.is_valid():
             form.save(commit=True)
 
-            return redirect('/rango/')
+            return redirect('/restaurant/')
         else:
             print(form.errors)
 
-    return render(request, 'rango/add_category.html', {'form': form})
+    return render(request, 'restaurant/add_category.html', {'form': form})
 
 @login_required
 def add_page(request, category_name_slug):
@@ -68,7 +68,7 @@ def add_page(request, category_name_slug):
         category = None
 
     if category is None:
-        return redirect('/rango/')
+        return redirect('/restaurant/')
 
     form = PageForm()
 
@@ -82,17 +82,17 @@ def add_page(request, category_name_slug):
                 page.views = 0
                 page.save()
 
-                return redirect(reverse('rango:show_category', kwargs={'category_name_slug': category_name_slug}))
+                return redirect(reverse('restaurant:show_category', kwargs={'category_name_slug': category_name_slug}))
 
         else:
             print(form.errors)
 
     context_dict = {'form': form, 'category': category}
-    return render(request, 'rango/add_page.html', context=context_dict)
+    return render(request, 'restaurant/add_page.html', context=context_dict)
 
 @login_required
 def restricted(request):
-     return render(request, 'rango/restricted.html')
+     return render(request, 'restaurant/restricted.html')
 
 def visitor_cookie_handler(request, response):
     visits = int(request.COOKIES.get('visits', '1'))

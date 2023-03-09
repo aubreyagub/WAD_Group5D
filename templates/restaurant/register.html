@@ -1,4 +1,4 @@
-{% extends 'rango/base.html' %}
+{% extends 'restaurant/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -14,11 +14,10 @@
     <h1>Register</h1>
     <br/>
     {% if registered %}
-        <strong>Thank you for registering!</strong> <br />
-        <a href="{% url 'rango:index' %}">Return to the homepage.</a>
+        Rango says: <strong>thank you for registering!</strong> <br />
+        <a href="{% url 'restaurant:index' %}">Return to the homepage.</a>
 <br />
      {% else %}
-         <strong>Register here!</strong> <br />
          <form id="user_form" method="post" action="{% url 'rango:register' %}" enctype="multipart/form-data">
 
         {% csrf_token %}
@@ -27,7 +26,7 @@
         {{ profile_form.as_p }}
 
 <br/>
-        <input type="submit" name="submit" value="Register" />
+        <input type="submit" name="submit" value="Register" class="submit-input"/>
     </form>
 
 

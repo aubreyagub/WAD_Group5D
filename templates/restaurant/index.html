@@ -1,0 +1,83 @@
+
+{% extends 'restaurant/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Homepage
+    {% endblock %}
+
+{% block body_block %}
+
+    <body>
+      <div class="home-wrapper">
+    <header class="header">
+        <h1>Welcome to the Restaurant
+        </h1>
+    </header>
+    <article class="main">
+        <section class="home" id="home">
+              <div class="home-content">
+            <h3>Food made with love</h3>
+            <p>Whether you're looking for a romantic dinner for two or a casual night out with friends, we invite you to come in and enjoy the delicious flavors and warm ambiance of our restaurant.
+            </p>
+            <a href="#" class="home-btn">go to menu</a>
+            <div class="home-image">
+                <img src="{% static 'images/pasta.png' %}" /><br />
+            </div>
+        </div>
+        
+        </section>
+    </article>
+
+    <aside class="aside aside1"> 
+
+        <h1>Most Popular</h1>
+        <!-- <div>
+            <h2>Most Liked Categories</h2>
+        {% if categories %}
+            <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="{% url 'rango:show_category' category.slug %}"> {{ category.name }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+        </div>
+
+        <div>
+            <h2>Most Viewed Pages</h2>
+        {% if pages %}
+            <ul>
+            {% for page in pages %}
+                <li>
+                    <a href="{{ page.url}}">{{ page.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no pages present.</strong>
+        {% endif %} 
+        </div> -->
+    </aside>
+    <aside class="aside aside2">
+        <h1>Contact Us</h1>
+        <h3>Where to find us:</h3>
+        <p>Glasgow,  Argyle Street 8A</p>
+        <h3>Work hours:</h3>
+        <p><li>Weekdays - 9.00-21.30</li>
+            <li>Weekends - 9.30-19.30</li> </p>
+        <h3>Our hotline:</h3>
+        <p>+447700150920</p>
+    </aside>
+    <!-- <footer class="footer">
+        <h1>Footer</h1>
+    </footer> -->
+</div> 
+
+</body>
+{% endblock %}
+

@@ -1,18 +1,20 @@
 
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rokkitt:wght@200&display=swap');
+
+:root{
+    --brown:#2e2b24;
+    --gold:  #EDC270;
+}
+/*----------Font settings-------------*/
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-body h1{
     font-family: 'PT Serif', serif;
+    text-decoration: none;
 }
-body p{
-   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-   font-size: 18px;
-   line-height: 1.5;
+p {
+    text-transform: none;
 }
 /*--------------GENERAL (for all pages)------------------*/
 /*------Navigation bar---------*/
@@ -55,54 +57,155 @@ nav a:hover{
     margin-left: 30%;
     margin-right: 30%;
     opacity: 0.2;
-    z-index: 3;
     position: absolute;
 }
-
-/*----------Footer-------------*/
-footer {
-    position: relative;
-    margin-top: 30%;
-    background-color: #777;
-    padding: 10px;
-    text-align: center;
-    color: white;
-    }
-
+/*-----------------Input fields-----------------*/
+input {
+    display:block;
+    width:30%;
+    margin:10px 0;
+    padding:10px;
+    border-radius:10px;
+    border: 1px solid #eee;
+    transition: .3s border-color;
+  }
+  input:hover {
+    border: 1px solid #aaa;
+  }
+  .submit-input {
+    border-color: #898484;
+  }
 /*-------------------HOME page-------------------*/
-/*------Background image-------*/
-#bg{
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+
+section{
+    padding:2rem 9%;
 }
-/*-----------Vertical sidebar (menu)-----------*/
-.vertical-menu {
-width: 200px;
-margin-top: 20px;
-position: relative;
-z-index: 10;
+.home {
+    display: flex;
+    flex-wrap: wrap;
+    gap:1px;
+    align-items: center;
+}
+.home.home-content{
+    flex:1 1 40rem;
+    padding-top:6.5rem;
+}
+.home .home-image{
+    flex:1 1 40rem;
+}
+.home .home-image img{
+    width: 70%;
+    height: auto;
+    padding: 0.25rem;
+    animation:float 3s linear infinite;
+    
+}
+@media screen and (max-width: 600px){
+    .home-content{
+        flex:1 1 40rem;
+        padding: 0px 20px;
+    }
+    .home .home-image img{
+        width:70%;
+        height: auto;
+        animation:float 3s linear infinite;
+        
+    }
+}
+@keyframes float{
+    0%,100%{
+        transform: translateY(0rem);
+    }
+    50%{
+        transform: translateY(3rem);
+    }
+}
+.home .home-content h3{
+    font-size: 2.5rem;
+    color:#2e2b24;
+}
+.home .home-content p{
+    font-size: 1.25rem;
+    color:#2e2b24;
+}
+.home-btn{
+    display: inline-block;
+    padding: .8rem 3rem;
+    border:.2rem solid var(--brown);
+    color:var(--brown);
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: .5rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    margin-top: 1rem;
+    text-decoration: none;
+}
+.btn ::before{
+    content: '';
+    position: absolute;
+    top:0;
+    right:0;
+    width: 100%;
+    height: 100%;
+    background: var(--gold);
+    z-index: -1;
+}
+.btn:hover::before{
+    width: 100%;
+    left:0;
 }
 
-.vertical-menu a {
-background-color: #eee;
-color: black;
-display: block;
-padding: 12px;
-text-decoration: none;
+.home-wrapper{
+    display: flex;
+    flex-flow: row wrap;
+    text-align: center;
+}
+.home-wrapper > * {
+    padding: 10px;
+    margin: 10px;
+    flex: 1 100%;
+    border-radius: 10px;
+}
+.header{
+    height: 50px;
+    color: #140f04;
+    font-size: 20px;
+}
+.footer{
+    height: 80px;
 }
 
-.vertical-menu a:hover {
-background-color: #ccc;
+.aside{
+    border:.2rem solid var(--brown);
+    color:var(--brown);
 }
 
-.vertical-menu a.active {
-background-color: black;
-color: white;
+@media all and(min-width: 800px) {
+  .main{
+    flex: 3;
+  } 
+  .aside1{
+    order: 1;
+  }
+  .aside2{
+    order: 2;
+  }   
+  .main{
+    order:2;
+  }
+  .footer{
+    order: 4;
+  }
 }
-
+@media all and (min-width: 600px){
+    .aside{
+        flex: 1;
+    }
+}
 /*-----------Searchbar-----------*/
-.search-wrapper{
+/* .search-wrapper{
     height: 60vh;
     display:flex;
     flex-direction: column;
@@ -152,7 +255,7 @@ color: white;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     font-size: 20px;
-}
+} */
 
 /*-----------ABOUT page------------*/
 .about-section{
@@ -184,6 +287,7 @@ color: white;
 }
 .content-section .content p{
     margin-top: 10px;
+    font-size: 18px;
 }
 .content-section .social{
     margin: 30px 30px;
@@ -225,5 +329,3 @@ color: white;
         text-align: center;
     }
 }
-
-

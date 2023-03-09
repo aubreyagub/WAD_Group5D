@@ -1,4 +1,4 @@
-{% extends 'rango/base.html' %}
+{% extends 'restaurant/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -8,7 +8,7 @@
  {% block body_block %}
      <h1>Add a Page to {{ category.name }}</h1>
      <div>
-         <form id="add_page_form" method="post" action="/rango/category/{{ category.slug }}/add_page/">
+         <form id="add_page_form" method="post" action="/restaurant/category/{{ category.slug }}/add_page/">
              {% csrf_token %}
              {% for hidden in form.hidden_fields %}
                  {{ hidden }}

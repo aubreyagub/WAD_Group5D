@@ -141,4 +141,4 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
 #LOGIN page
-LOGIN_URL = 'rango:login'
+LOGIN_URL = 'restaurant:login'

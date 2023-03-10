@@ -73,7 +73,7 @@ def add_menu(request):
             print(form.errors)
     return render(request, 'rango/add_menu.html', {'form': form})
 
-def get_menu(request, menu_name_slug):
+def show_menu(request, menu_name_slug):
     context_dict = {}
     
     try:
@@ -85,15 +85,60 @@ def get_menu(request, menu_name_slug):
 
     return render(request, 'restaurant.html', context=context_dict)
 
-def get_menu_item(request, menu_name_slug):
+def show_menu_item(request, menu_name_slug):
     context_dict = {}
     
     try:
         menuItem = menuItem.objects.get(slug=menu_name_slug)
-        reviews = MenuItem.objects.filter(menu=menu)
-        context_dict['menuItems'] = menuItems
+        reviews = MenuItem.objects.filter(menuItem=menuItem)
+        context_dict['reviews'] = reviews
     except Menu.DoesNotExist:
         context_dict['menuItems'] = None
 
     return render(request, 'restaurant.html', context=context_dict)
 
+@login_required
+def add_menu_item(request, menu_name_slug):
+    try:
+        menu = menu.objects.get(slug=menu_name_slug)
+    except Menu.DoesNotExist:
+        menu = None
+    if menu is None:
+        return redirect('/restaurant/')
+    form = MenuItemForm()
+    if request.method == 'POST':
+        form = MenuItemForm(request.POST)
+        if form.is_valid():
+            if menu:
+                menuItem = form.save(commit=False)
+                menuItem.menu = menu
+                menuItem.save()
+                return redirect(reverse('restaurant:show_menu', kwargs={'menu_name_slug': menu_name_slug}))
+        else:
+            print(form.errors)
+
+    context_dict = {'form': form, 'menu': menu}
+    return render(request, 'restaurant/add_menuItem.html', context=context_dict)
+
+@login_required
+def add_review(request, menuItem_name_slug):
+    try:
+        menuItem = menuItem.objects.get(slug=menuItem_name_slug)
+    except MenuItem.DoesNotExist:
+        menuItem = None
+    if menuItem is None:
+        return redirect('/restaurant/')
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            if menuItem:
+                review = form.save(commit=False)
+                review.menuItem = menuItem
+                review.save()
+                return redirect(reverse('restaurant:show_menu', kwargs={'menu_name_slug': menuItem_name_slug}))
+        else:
+            print(form.errors)
+
+    context_dict = {'form': form, 'menuItem': menuItem}
+    return render(request, 'restaurant/add_menItem.html', context=context_dict)

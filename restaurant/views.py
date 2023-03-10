@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
+from restaurant.models import Menu, MenuItem, Review
+from restaurant.forms import MenuForm, MenuItemForm, ReviewForm
 
 def index(request):
     context_dict = {}
@@ -57,4 +59,41 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
+
+@login_required
+def add_menu(request):
+    form = MenuForm()
+    if request.method == 'POST':
+        form = MenuForm(request.POST)
+        if form.is_valid():
+            cat = form.save(commit=True)
+            print(cat, cat.slug)
+            return redirect('/rango/')
+        else:
+            print(form.errors)
+    return render(request, 'rango/add_menu.html', {'form': form})
+
+def get_menu(request, menu_name_slug):
+    context_dict = {}
+    
+    try:
+        menu = menu.objects.get(slug=menu_name_slug)
+        menuItems = MenuItem.objects.filter(menu=menu)
+        context_dict['menuItems'] = menuItems
+    except Menu.DoesNotExist:
+        context_dict['menuItems'] = None
+
+    return render(request, 'restaurant.html', context=context_dict)
+
+def get_menu_item(request, menu_name_slug):
+    context_dict = {}
+    
+    try:
+        menuItem = menuItem.objects.get(slug=menu_name_slug)
+        reviews = MenuItem.objects.filter(menu=menu)
+        context_dict['menuItems'] = menuItems
+    except Menu.DoesNotExist:
+        context_dict['menuItems'] = None
+
+    return render(request, 'restaurant.html', context=context_dict)
 

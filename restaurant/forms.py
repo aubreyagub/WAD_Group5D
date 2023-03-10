@@ -1,6 +1,5 @@
 from django import forms
-from restaurant.models import Page, Category
-from restaurant.models import Restaurant, Review, Menu, MenuItem
+from restaurant.models import Review, Menu, MenuItem
 from django.contrib.auth.models import User
 from restaurant.models import UserProfile
 
@@ -15,13 +14,14 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('website', 'picture',)
 
-class RestaurantForm(forms.ModelForm):
-    restaurantID = forms.CharField(max_length=Restaurant.RESTAURANT_ID_MAX_LENGTH, help_text="Restaurant name:")
-    location = forms.CharField(max_length=Restaurant.RESTAURANT_LOCATION_MAX_LENGTH, help_text="Location:")
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
-    class Meta:
-        model = Restaurant
-        fields = ('restaurantID', 'location', 'photo',)
+### REMOVE IF NOT MULTIPLE RESTAURANTS
+# class RestaurantForm(forms.ModelForm):
+#     restaurantID = forms.CharField(max_length=Restaurant.RESTAURANT_ID_MAX_LENGTH, help_text="Restaurant name:")
+#     location = forms.CharField(max_length=Restaurant.RESTAURANT_LOCATION_MAX_LENGTH, help_text="Location:")
+#     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+#     class Meta:
+#         model = Restaurant
+#         fields = ('restaurantID', 'location', 'photo',)
 
 class MenuForm(forms.ModelForm):
     menuID = forms.CharField(max_length=Menu.MENU_ID_MAX_LENGTH, help_text="Menu name:")

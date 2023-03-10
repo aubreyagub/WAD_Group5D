@@ -23,7 +23,7 @@
                     <li><a href="{% url 'restaurant:restricted' %}" style="text-decoration: none;">Restricted Page</a></li>
                     <li><a href="{% url 'auth_logout' %}" style="text-decoration: none;">Logout</a></li>
                     {% else %}
-            
+                    <li><a href="{% url 'registration_register' %}" style="text-decoration: none;">Sign Up</a></li>
                     <li><a href="{% url 'auth_login' %}" style="text-decoration: none;">Login</a></li>         
                 {% endif %}
             </ul>
@@ -31,9 +31,8 @@
 
      </div>
          <title>
-             Rango -
+             Restaurant -
              {% block title_block %}
-                 How to Tango with Django!
              {% endblock %}
          </title>
      </head>

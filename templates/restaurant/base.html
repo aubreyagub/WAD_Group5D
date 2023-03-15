@@ -19,6 +19,7 @@
             <ul class="menu">
                     <li><a href="{% url 'restaurant:index' %}" style="text-decoration: none;">Home</a></li>
                     <li><a href="{% url 'restaurant:about' %}" style="text-decoration: none;">About</a></li>
+                    
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'restaurant:restricted' %}" style="text-decoration: none;">Restricted Page</a></li>
                     <li><a href="{% url 'auth_logout' %}" style="text-decoration: none;">Logout</a></li>

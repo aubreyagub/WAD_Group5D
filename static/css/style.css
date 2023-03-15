@@ -204,58 +204,6 @@ section{
         flex: 1;
     }
 }
-/*-----------Searchbar-----------*/
-/* .search-wrapper{
-    height: 60vh;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-}
-.search-wrapper img{
-    margin-top: 10px;
-    width: 380px;
-}
-.search-container{
-    width: 40%;
-    position:absolute;
-    top:55%;
-    left:50%;
-    transform: translate(-50%,-50%);
-}
-.search-box{
-    width:100%;
-    position: relative;
-    display: flex;
-}
-
-.search{
-    width:100%;
-    border:3px solid rgb(178, 134, 22);
-    border-right: none;
-    padding: 5px;
-    height: 36px;
-    outline:none;
-    color: #735411;
-    font-size: 20px;
-
-}
-
-.search:focus{
-    color:#140f04;
-    box-shadow: 0 0 5px rgb(178, 134, 22);
-}
-
-.search-btn{
-    width:40px;
-    height:36px;
-    border:1px solid rgb(178, 134, 22);
-    background: rgb(178, 134, 22);
-    text-align: center;
-    color:#3f3216;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    font-size: 20px;
-} */
 
 /*-----------ABOUT page------------*/
 .about-section{

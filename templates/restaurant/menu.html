@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ menu.menuID }}</h1>
+
+{% if menuItems %}
+  <ul>
+  {% for item in menuItems %}
+    <li>
+      <h3>{{ item.menuItemID }}</h3>
+      <p>{{ item.description }}</p>
+      <p>Price: {{ item.price }}</p>
+      {% if item.photo %}
+        <img src="{{ item.photo.url }}" alt="{{ item.menuItemID }} photo">
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No menu items found.</p>
+{% endif %}
+{% endblock %}

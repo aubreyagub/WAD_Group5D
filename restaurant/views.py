@@ -68,22 +68,16 @@ def add_menu(request):
         if form.is_valid():
             cat = form.save(commit=True)
             print(cat, cat.slug)
-            return redirect('/restaurant/')
+            return redirect('/rango/')
         else:
             print(form.errors)
-    return render(request, 'restaurant/add_menu.html', {'form': form})
+    return render(request, 'rango/add_menu.html', {'form': form})
 
-def show_menu(request, menu_name_slug):
+def show_menu(request):
     context_dict = {}
-    
-    try:
-        menu = menu.objects.get(slug=menu_name_slug)
-        menuItems = MenuItem.objects.filter(menu=menu)
-        context_dict['menuItems'] = menuItems
-    except Menu.DoesNotExist:
-        context_dict['menuItems'] = None
+    context_dict['menuItems'] = 'Crunchy, creamy, cookie, candy, cupcake!'
 
-    return render(request, 'menu.html', context=context_dict)
+    return render(request, 'restaurant/menu.html', context=context_dict)
 
 def show_menu_item(request, menu_name_slug):
     context_dict = {}
@@ -95,7 +89,7 @@ def show_menu_item(request, menu_name_slug):
     except Menu.DoesNotExist:
         context_dict['menuItems'] = None
 
-    return render(request, 'menu.html', context=context_dict)
+    return render(request, 'restaurant.html', context=context_dict)
 
 @login_required
 def add_menu_item(request, menu_name_slug):

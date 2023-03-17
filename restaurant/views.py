@@ -68,10 +68,10 @@ def add_menu(request):
         if form.is_valid():
             cat = form.save(commit=True)
             print(cat, cat.slug)
-            return redirect('/rango/')
+            return redirect('/restaurant/')
         else:
             print(form.errors)
-    return render(request, 'rango/add_menu.html', {'form': form})
+    return render(request, 'restaurant/add_menu.html', {'form': form})
 
 def show_menu(request):
     context_dict = {}
@@ -135,4 +135,4 @@ def add_review(request, menuItem_name_slug):
             print(form.errors)
 
     context_dict = {'form': form, 'menuItem': menuItem}
-    return render(request, 'restaurant/add_menItem.html', context=context_dict)
+    return render(request, 'restaurant/add_menuItem.html', context=context_dict)

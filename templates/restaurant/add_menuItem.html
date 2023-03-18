@@ -1,0 +1,24 @@
+{% extends 'restaurant/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+     Add a Menu Item
+ {% endblock %}
+
+ {% block body_block %}
+     <h1>Add a Page to {{ category.name }}</h1>
+     <div>
+         <form id="add_menuItem_form" method="post" action="/restaurant/menu/{{ menu.slug }}/add_menuItem/">
+             {% csrf_token %}
+             {% for hidden in form.hidden_fields %}
+                 {{ hidden }}
+             {% endfor %}
+             {% for field in form.visible_fields %}
+                 {{ field.errors }}
+                 {{ field.help_text }}
+                 {{ field }}
+             {% endfor %}
+             <input type="submit" name="submit" value="Add Menu Item" />
+         </form>
+     </div>
+ {% endblock %}

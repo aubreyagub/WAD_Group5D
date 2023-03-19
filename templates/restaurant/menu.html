@@ -2,7 +2,7 @@
 
 {% block title_block %}
     {% if menu %}
-            {{ menu.name }}
+            {{ menu.menuID }}
         {% else %}
             Unknown Menu
         {% endif %}
@@ -10,8 +10,8 @@
 
 {% block body_block %}
     {% if menu %}
-    <h1>{{ menu.name }}</h1>
-        {% if menuItems %}
+    <h1>{{ menu.menuID }}</h1>
+    {% if menuItems %}
     <ul>
         {% for item in menuItems %}
         <li>
@@ -25,11 +25,11 @@
         {% endfor %}
     </ul>
     {% else %}
-    <strong>No items currently in menu.</strong>
-        {% endif %}
-        {% if user.is_authenticated %}
-    <!-- <a href="{% url 'restaurant:add_menu' category.slug %}">Add Menu</a> <br /> -->
-        {% endif %}
+        <strong>No items currently in menu.</strong>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'restaurant:add_menu_item' menu.slug %}">Add a Menu Item</a> <br />     
+    {% endif %}
     {% else %}
     <strong>The specified menu does not exist.</strong>
     {% endif %}

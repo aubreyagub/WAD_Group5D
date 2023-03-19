@@ -40,7 +40,7 @@ class MenuForm(forms.ModelForm):
 class MenuItemForm(forms.ModelForm):
     menuItemID = forms.CharField(max_length=MenuItem.MENUITEM_ID_MAX_LENGTH, help_text="Menu item name:")
     description = forms.CharField(max_length=MenuItem.DESCRIPTION_MAX_LENGTH, help_text="Describe this menu item:")
-    price = forms.FloatField(initial=0)
+    price = forms.FloatField(initial=0, help_text="Price: ")
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
     class Meta:
         model = MenuItem

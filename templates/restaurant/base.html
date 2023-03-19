@@ -15,16 +15,20 @@
             <div class="logo">
                <a href="#"> <img src ="{% static 'images/logo_nav.png' %}" alt="logo"></a>
             </div>
+
+
             <div class="toogle"></div>
             <ul class="menu">
                     <li><a href="{% url 'restaurant:index' %}" style="text-decoration: none;">Home</a></li>
                     <li><a href="{% url 'restaurant:about' %}" style="text-decoration: none;">About</a></li>
-                    <li><a href="{% url 'restaurant:show_menu' %}" style="text-decoration: none;">Menu</a></li>         
+                    <!-- I removed the menu link since we don't actually have a single menu but multiple ones so it doesn't work anymore-->
+                    <!-- Scroll further down to see menu list instead -->
                     
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'restaurant:restricted' %}" style="text-decoration: none;">Restricted Page</a></li>
                     <li><a href="{% url 'auth_logout' %}" style="text-decoration: none;">Logout</a></li>
-                    <li><a href="{% url 'restaurant:add_menuItem' %}" style="text-decoration: none;">Add Menu Item</a></li>
+                    <!-- Adding a menu item page also had to be removed because we cannot add a menu item on its own because we won't have access to what category it needs ot be in otherwise-->
+                    <!-- The add menu item template should only be rendered when we are inside a menu -->
                     <li><a href="{% url 'restaurant:add_menu' %}" style="text-decoration: none;">Add Menu</a></li>
                     {% else %}
                     <li><a href="{% url 'registration_register' %}" style="text-decoration: none;">Sign Up</a></li>
@@ -41,7 +45,11 @@
          </title>
      </head>
 <body>
-
+        <div>
+            {% block sidebar_block %}
+                {% get_menu_list %}
+            {% endblock %}
+        </div>
          <div>
              {% block body_block %}
              {% endblock %}

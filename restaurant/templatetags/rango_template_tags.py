@@ -1,9 +1,9 @@
 from django import template
-from restaurant.models import Category
+from restaurant.models import Menu
 
 register = template.Library()
 
 
-@register.inclusion_tag('restaurant/categories.html')
-def get_category_list(current_category=None):
-    return {'categories': Category.objects.all(), 'current_category': current_category, }
+@register.inclusion_tag('restaurant/menus.html')
+def get_menu_list():
+    return {'menus': Menu.objects.all() }

@@ -73,9 +73,16 @@ def add_menu(request):
             print(form.errors)
     return render(request, 'restaurant/add_menu.html', {'form': form})
 
-def show_menu(request):
+def show_menu(request,menu_name_slug):
     context_dict = {}
-    context_dict['menuItems'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    try:
+        menu = Menu.objects.get(slug=menu_name_slug)
+        menuItems = MenuItem.objects.filter(menu=menu)
+        context_dict['menuItems'] = menuItems
+        context_dict['menu'] = menu
+    except Menu.DoesNotExist:
+        context_dict['menu'] = None
+        context_dict['menuItems'] = None
 
     return render(request, 'restaurant/menu.html', context=context_dict)
 
@@ -94,7 +101,7 @@ def show_menu_item(request, menu_name_slug):
 @login_required
 def add_menu_item(request, menu_name_slug):
     try:
-        menu = menu.objects.get(slug=menu_name_slug)
+        menu = Menu.objects.get(slug=menu_name_slug)
     except Menu.DoesNotExist:
         menu = None
     if menu is None:

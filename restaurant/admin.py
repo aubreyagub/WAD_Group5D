@@ -1,15 +1,13 @@
 from django.contrib import admin
 
 # Register your models here.
-from restaurant.models import Category, Page
-from restaurant.models import UserProfile
+from restaurant.models import UserProfile, MenuItem, Menu
 
-class PageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'url')
+class MenuItemAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug':('menuItemID',)}
 
-class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug':('name',)}
+class MenuAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug':('menuID',)}
 
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Page, PageAdmin)
-admin.site.register(UserProfile)
+admin.site.register(MenuItem, MenuItemAdmin)
+admin.site.register(Menu, MenuAdmin)

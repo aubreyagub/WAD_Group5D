@@ -45,11 +45,13 @@
          </title>
      </head>
 <body>
+        <!-- This is one way we can display the list of menus. Feel free to change how I've currently coded it because this is just displaying a list of hyperlinks and its not very pretty. -->
         <div>
             {% block sidebar_block %}
                 {% get_menu_list %}
             {% endblock %}
         </div>
+
          <div>
              {% block body_block %}
              {% endblock %}

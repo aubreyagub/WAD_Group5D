@@ -1,11 +1,9 @@
-<ul> 
-    {% if menus %}
+<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+ {% if menus %}
         {% for m in menus %}
-            <li>
-                <a href="{% url 'restaurant:show_menu' m.slug %}">{{ m.menuID }}</a>
-            </li>
+                <a class="dropdown-item" href="{% url 'restaurant:show_menu' m.slug %}">{{ m.menuID }}</a>
         {% endfor %}
     {% else %} 
         <li><strong>There are no menus present.</strong></li>
     {% endif %}
-</ul>
+</div>

@@ -10,20 +10,33 @@
 
 {% block body_block %}
     {% if menu %}
-    <h1>{{ menu.menuID }}</h1>
-    {% if menuItems %}
-    <ul>
-        {% for item in menuItems %}
-        <li>
-          <h1>{{item.menuItemID}}</h1>
-          <p>{{item.description}}</p>
-          <p>Price: {{item.price}}</p>
-          {% if item.photo %}
-        <img src="{{ item.photo.url }}" alt="{{ item.menuItemID }} photo">
-         {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
+    <div class = "container mt-2">
+        <h1 class = "text-center font-weight-normal">{{ menu.menuID }}</h1>
+    </div>
+    {% if menuItems %}>
+    <div class = "container mt-2 d-flex mb-5">
+        <div class = "row">
+            {% for item in menuItems %}
+            <div class="col-lg-4 d-flex align-items-stretch">
+                <div class = "card">
+                    {% if item.photo %}
+                    <img src="{{ item.photo.url }}" alt="{{ item.menuItemID }} photo" class="card-img-top w-100">
+                    {% endif %}
+                    <div class="card-body">
+                        <h2 class="card-title">{{item.menuItemID}}</h2>
+                        <div class = "d-flex justify-content-between">
+                            <p class="card-text">{{item.description}}</p>
+                            <p class="card-text mr-2 text-success">{{item.price}}</p>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-dark" >Add to Card</a>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
     {% else %}
         <strong>No items currently in menu.</strong>
     {% endif %}

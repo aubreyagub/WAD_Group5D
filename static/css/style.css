@@ -59,6 +59,7 @@ nav a:hover{
     opacity: 0.2;
     position: absolute;
 }
+
 /*-----------------Input fields-----------------*/
 input {
     display:block;
@@ -277,3 +278,11 @@ section{
         text-align: center;
     }
 }
+/* -------------- MENU PAGE -------------- */
+.card:hover{
+    box-shadow: 20px 20px 80px -44px #000;
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+
+/* **************** End MENU PAGE **************** */

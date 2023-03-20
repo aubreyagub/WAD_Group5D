@@ -64,17 +64,17 @@ def populate():
         {'menuItemID': 'Spaghetti',
          'description': 'Drumwheat pasta with ragu sauce and parmesan cheese.',
          'price': 10.99,
-         'photo': 'population_photos/spaghetti.jpg',
+         'photo': 'menu_item_images/spaghetti.jpg',
          'reviews': spaghetti_reviews},
         {'menuItemID': 'Chicken Burger',
          'description': 'Chicken burger pate with tomatoes, lettuce and ketchup in a brioche bun.',
          'price':7.49,
-         'photo': 'population_photos/chicken_burger.jpg',
+         'photo': 'menu_item_images/chicken_burger.jpeg',
          'reviews': chickenBurger_reviews},
         {'menuItemID': 'Sweet Potato Fries',
          'description': 'Deep-fried thin sweet potato slices with cajun seasoning.',
          'price':5,
-         'photo': None,
+         'photo': 'menu_item_images/sweet-potato-fries.jpeg',
          'reviews': spFries_reviews}]
 
 
@@ -83,12 +83,12 @@ def populate():
         {'menuItemID': 'Orange Juice',
          'description': 'Freshly squeezed orange juice.',
          'price': 2.49,
-         'photo': 'population_photos/orange_juice.jpg',
+         'photo': 'menu_item_images/orange_juice.jpg',
          'reviews': oj_reviews},
         {'menuItemID': 'Hot Chocolate',
          'description': 'Made with oat milk, topped with marshmallows and cream.',
          'price': 2.99,
-         'photo': None,
+         'photo': 'menu_item_images/hot-chocolate.jpeg',
          'reviews': hotChocolate_reviews}]
 
 

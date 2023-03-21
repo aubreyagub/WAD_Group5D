@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static%}
+{% load static %}
 {% load rango_template_tags %}
 
  <html>
@@ -52,7 +52,8 @@
                             {% block sidebar_block %}
                             {% get_menu_list %}
                             {% endblock %}
-                          </div>
+                            </div>
+                        </div>
                     </li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'restaurant:restricted' %}" style="text-decoration: none;">Restricted Page</a></li>
@@ -64,17 +65,15 @@
                 {% endif %}
             </ul>
         </nav>
-
-     </div>
+     <div>
          <title>
              Restaurant -
              {% block title_block %}
              {% endblock %}
          </title>
-     </head>
+    </div>
+    </head>
 <body>
-
-
          <div>
              {% block body_block %}
              {% endblock %}

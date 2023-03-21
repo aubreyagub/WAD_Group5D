@@ -2,8 +2,10 @@ import os
 import re
 import importlib
 from django.urls import reverse
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.conf import settings
+from bs4 import BeautifulSoup
+
 
 FAILURE_HEADER = f"{os.linesep}{os.linesep}{os.linesep}================{os.linesep}TwD TEST FAILURE =({os.linesep}================{os.linesep}"
 FAILURE_FOOTER = f"{os.linesep}"
@@ -49,6 +51,46 @@ class TemplatesStructureTests(TestCase):
         self.assertTrue(os.path.isfile(index_path), f"{FAILURE_HEADER}Your index.html template does not exist, or is in the wrong location.{FAILURE_FOOTER}")
         self.assertTrue(os.path.isfile(about_path), f"{FAILURE_HEADER}Your about.html template does not exist, or is in the wrong location.{FAILURE_FOOTER}")
         
+
+class BaseTemplateTest(TestCase):
+    def setUp(self):
+        self.project_base_dir = os.getcwd()
+        self.templates_dir = os.path.join(self.project_base_dir, 'templates')
+        self.restaurant_templates_dir = os.path.join(self.templates_dir, 'restaurant')
+        self.client = Client()
+        
+    def test_css_present(self):
+        base_path = os.path.join(self.restaurant_templates_dir, 'base.html')
+        file = open(base_path)
+
+        soup = BeautifulSoup(file, 'html.parser')
+
+        # find the <link> element with the specific href value
+        link = soup.find('link', href="{% static 'css/style.css' %}")
+
+        # get the href attribute value of the <link> element
+        href = link.get('href')
+        
+        self.assertEqual(href, "{% static 'css/style.css' %}", f"{FAILURE_HEADER}No CSS Style sheet found in base.html.{FAILURE_FOOTER}")
+        
+    def test_css(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'css/style.css', status_code=200)
+        self.assertContains(response, 'font-awesome.min.css', status_code=200)
+        self.assertContains(response, 'bootstrap.min.css', status_code=200)
+
+    def test_jquery(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'jquery.slim.min.js', status_code=200)
+        self.assertContains(response, 'popper.min.js', status_code=200)
+        self.assertContains(response, 'bootstrap.bundle.min.js', status_code=200)
+
+    def test_ajax(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'jquery-3.2.1.slim.min.js', status_code=200)
+        self.assertContains(response, 'popper.min.js', status_code=200)
+        self.assertContains(response, 'bootstrap.min.js', status_code=200)
+
 class IndexPageTests(TestCase):
     # A series of tests to ensure that the index page/view has been updated to work with templates.
     

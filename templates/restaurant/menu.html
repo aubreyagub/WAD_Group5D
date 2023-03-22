@@ -23,13 +23,13 @@
                     <img src="{{ item.photo.url }}" alt="{{ item.menuItemID }} photo" class="card-img-top w-100">
                     {% endif %}
                     <div class="card-body">
-                        <a href="{% url 'restaurant:show_menu_item' menu.slug item.slug %}"class = "text-center font-weight-normal">{{item.menuItemID}}</a>
+                        <h3 class = "text-center font-weight-normal">{{item.menuItemID}}</h3>
                         <div class = "d-flex justify-content-between">
                             <p class="card-text">{{item.description}}</p>
                             <p class="card-text mr-2 text-success">£{{item.price}}</p>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-dark" >Add to Card</a>
+                    <a href="{% url 'restaurant:show_menu_item' menu.slug item.slug %}"class = "text-left font-weight-normal p-3">View Reviews</a>
                 </div>
             </div>
 

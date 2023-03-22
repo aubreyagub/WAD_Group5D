@@ -5,7 +5,7 @@ app_name = 'restaurant'
 urlpatterns = [
     path('', views.index, name='index'),
     path('about/', views.about, name = 'about'),
-    path('menu/<slug:menu_name_slug>/add_menu_item/', views.add_menu_item, name='add_menu_item'),
+    path('menu/<slug:menu_name_slug>//add_menuItem/', views.add_menu_item, name='add_menu_item'),
     path('menu/<slug:menu_name_slug>/', views.show_menu, name='show_menu'),
     path('menu/<slug:menu_name_slug>/<slug:menuItem_name_slug>/', views.show_menu_item, name='show_menu_item'),
     #Template shows form but without any functionality

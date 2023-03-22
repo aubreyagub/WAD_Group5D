@@ -56,7 +56,6 @@ class UserProfile(models.Model):
 class Menu(models.Model):
     MENU_ID_MAX_LENGTH=128
     menuID = models.TextField(max_length=MENU_ID_MAX_LENGTH,unique=True) # primary key
-    # restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE) # one to one relationship - one menu for one restaurant
     slug = models.SlugField(unique=True)
     def save(self, *args, **kwards):
         self.slug = slugify(self.menuID)

@@ -118,6 +118,10 @@ def add_menu_item(request, menu_name_slug):
             if menu:
                 menuItem = form.save(commit=False)
                 menuItem.menu = menu
+
+            if 'photo' in request.FILES:
+                menuItem.photo = request.FILES['photo']
+                
                 menuItem.save()
                 return redirect(reverse('restaurant:show_menu', kwargs={'menu_name_slug': menu_name_slug}))
         else:

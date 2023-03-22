@@ -4,6 +4,6 @@
                 <a class="dropdown-item" href="{% url 'restaurant:show_menu' m.slug %}">{{ m.menuID }}</a>
         {% endfor %}
     {% else %} 
-        <li><strong>There are no menus present.</strong></li>
+        <strong>There are no menus present.</strong>
     {% endif %}
 </div>

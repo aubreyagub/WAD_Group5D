@@ -1,0 +1,52 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title_block %}
+    {% if menuItem %}
+            {{ menuItem.menuItemID }}
+        {% else %}
+            Unknown Menu Item
+        {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    {% if menuItem %}
+    <div class = "container mt-2">
+        <h1 class = "text-center font-weight-normal">{{ menuItem.menuItemID }}</h1>
+    </div>
+    {% if reviews %}
+    <div class = "container mt-2 d-flex mb-5">
+        <div class = "row">
+            {% for review in reviews %}
+            <div class="col-lg-4 d-flex align-items-stretch mb-5">
+                <div class = "card">
+                    {% if item.photo %}
+                    <img src="{{ review.photo.url }}" alt="{{ review.reviewID }} photo" class="card-img-top w-100">
+                    {% endif %}
+                    <div class="card-body">
+                        <h2 class = "text-center font-weight-normal">{{review.reviewID}}</h2>
+                        <div class = "d-flex justify-content-between">
+                            <p class="card-text mr-3 text-success ">@{{review.user}}</p>
+                            <p class="card-text mr-3" >{{review.comment}}</p>
+                            <p class="card-text mr-3 text-success">{{review.ratings}} STARS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+            <div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'restaurant:add_review' menu.slug menuItem.slug %}" class="home-btn">Add a Review</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+        <strong>No reviews currently for this item.</strong>
+    {% endif %}
+    
+    {% else %}
+    <strong>The specified menu item does not exist.</strong>
+    {% endif %}
+{% endblock %}

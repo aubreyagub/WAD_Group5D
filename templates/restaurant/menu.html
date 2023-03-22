@@ -23,7 +23,7 @@
                     <img src="{{ item.photo.url }}" alt="{{ item.menuItemID }} photo" class="card-img-top w-100">
                     {% endif %}
                     <div class="card-body">
-                        <h2 class="card-title">{{item.menuItemID}}</h2>
+                        <a href="{% url 'restaurant:show_menu_item' menu.slug item.slug %}"class = "text-center font-weight-normal">{{item.menuItemID}}</a>
                         <div class = "d-flex justify-content-between">
                             <p class="card-text">{{item.description}}</p>
                             <p class="card-text mr-2 text-success">£{{item.price}}</p>

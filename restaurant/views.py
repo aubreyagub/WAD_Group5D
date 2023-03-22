@@ -86,17 +86,22 @@ def show_menu(request,menu_name_slug):
 
     return render(request, 'restaurant/menu.html', context=context_dict)
 
-def show_menu_item(request, menu_name_slug):
+def show_menu_item(request, menu_name_slug, menuItem_name_slug):
     context_dict = {}
     
     try:
-        menuItem = menuItem.objects.get(slug=menu_name_slug)
-        reviews = MenuItem.objects.filter(menuItem=menuItem)
+        menu = Menu.objects.get(slug=menu_name_slug)
+        menuItem = MenuItem.objects.get(slug=menuItem_name_slug)
+        reviews = Review.objects.filter(menuItem=menuItem)
         context_dict['reviews'] = reviews
+        context_dict['menuItem'] = menuItem
+        context_dict['menu'] = menu
     except Menu.DoesNotExist:
-        context_dict['menuItems'] = None
+        context_dict['menu'] = None
+        context_dict['menuItem'] = None
+        context_dict['reviews'] = None
 
-    return render(request, 'restaurant.html', context=context_dict)
+    return render(request, 'restaurant/menu_item.html', context=context_dict)
 
 @login_required
 def add_menu_item(request, menu_name_slug):
@@ -122,9 +127,9 @@ def add_menu_item(request, menu_name_slug):
     return render(request, 'restaurant/add_menuItem.html', context=context_dict)
 
 @login_required
-def add_review(request, menuItem_name_slug):
+def add_review(request, menu_name_slug, menuItem_name_slug):
     try:
-        menuItem = menuItem.objects.get(slug=menuItem_name_slug)
+        menuItem = MenuItem.objects.get(slug=menuItem_name_slug)
     except MenuItem.DoesNotExist:
         menuItem = None
     if menuItem is None:
@@ -137,9 +142,9 @@ def add_review(request, menuItem_name_slug):
                 review = form.save(commit=False)
                 review.menuItem = menuItem
                 review.save()
-                return redirect(reverse('restaurant:show_menu', kwargs={'menu_name_slug': menuItem_name_slug}))
+                return redirect(reverse('restaurant:show_menu_item', kwargs={'menuItem_name_slug': menuItem_name_slug}))
         else:
             print(form.errors)
 
     context_dict = {'form': form, 'menuItem': menuItem}
-    return render(request, 'restaurant/add_menuItem.html', context=context_dict)
+    return render(request, 'restaurant/add_review.html', context=context_dict)

@@ -142,34 +142,87 @@ class RegistrationTests(TestCase):
         
         self.assertTrue('registration' in settings.INSTALLED_APPS)
     
-    def test_registrationform_template(self):
+    def test_registration_templates(self):
         #  Does the registration_form.html template exist in the correct place
         
         template_base_path = os.path.join(settings.TEMPLATE_DIR, 'registration')
-        template_path = os.path.join(template_base_path, 'registration_form.html')
-        self.assertTrue(os.path.exists(template_path), f"{FAILURE_HEADER}We couldn't find the 'registration_form.html' template in the 'templates/registration/' directory.{FAILURE_FOOTER}")
+        registration_form_template_path = os.path.join(template_base_path, 'registration_form.html')
+        login_template_path = os.path.join(template_base_path, 'login.html')
+        logout_template_path = os.path.join(template_base_path, 'logout.html')
+        
+        self.assertTrue(os.path.exists(registration_form_template_path), f"{FAILURE_HEADER}We couldn't find the 'registration_form.html' template in the 'templates/registration/' directory.{FAILURE_FOOTER}")
+        
+        self.assertTrue(os.path.exists(login_template_path), f"{FAILURE_HEADER}We couldn't find the 'login.html' template in the 'templates/registration/' directory.{FAILURE_FOOTER}")
+        
+        self.assertTrue(os.path.exists(logout_template_path), f"{FAILURE_HEADER}We couldn't find the 'logout.html' template in the 'templates/registration/' directory.{FAILURE_FOOTER}")
 
-        template_str = get_template(template_path)
-        full_title_pattern = r'<title>(.*?)\s*-\s*Register\s*</title>'
-        block_title_pattern = r'{% block title_block %}(\s*|\n*)Register(\s*|\n*){% (endblock|endblock title_block) %}'
+        registration_form_template_str = get_template(registration_form_template_path)
+        registration_form_block_title_pattern = r'{% block title_block %}(\s*|\n*)Register(\s*|\n*){% (endblock|endblock title_block) %}'
 
-        self.assertTrue(re.search(block_title_pattern, template_str), f"{FAILURE_HEADER}Is register.html using template inheritance? Is your <title> block correct?{FAILURE_FOOTER}")
+        self.assertTrue(re.search(registration_form_block_title_pattern, registration_form_template_str), f"{FAILURE_HEADER}Is registration_form.html using template inheritance? Is your <title> block correct?{FAILURE_FOOTER}")
+        
+        login_template_str = get_template(login_template_path)
+        login_block_title_pattern = r'{% block title_block %}(\s*|\n*)Login(\s*|\n*){% (endblock|endblock title_block) %}'
+
+        self.assertTrue(re.search(login_block_title_pattern, login_template_str), f"{FAILURE_HEADER}Is login.html using template inheritance? Is your <title> block correct?{FAILURE_FOOTER}")
+        
+        logout_template_str = get_template(logout_template_path)
+        logout_block_title_pattern = r'{% block title_block %}(\s*|\n*)Logged Out(\s*|\n*){% (endblock|endblock title_block) %}'
+
+        self.assertTrue(re.search(logout_block_title_pattern, logout_template_str), f"{FAILURE_HEADER}Is logout.html using template inheritance? Is your <title> block correct?{FAILURE_FOOTER}")
+        
+    def test_good_form_creation(self):
+        # Creates a UserProfileForm and UserForm, and attempts to save them.
+        # Upon completion, we should be able to login with the details supplied.
     
+        user_data = {'username': 'testuser', 'password': 'test123', 'email': 'test@test.com'}
+        user_form = forms.UserForm(data=user_data)
 
+        user_profile_data = {'website': 'http://www.bing.com', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
+        user_profile_form = forms.UserProfileForm(data=user_profile_data)
+
+        self.assertTrue(user_form.is_valid(), f"{FAILURE_HEADER}The UserForm was not valid after entering the required data.{FAILURE_FOOTER}")
+        self.assertTrue(user_profile_form.is_valid(), f"{FAILURE_HEADER}The UserProfileForm was not valid after entering the required data.{FAILURE_FOOTER}")
+
+        user_object = user_form.save()
+        user_object.set_password(user_data['password'])
+        user_object.save()
+        
+        user_profile_object = user_profile_form.save(commit=False)
+        user_profile_object.user = user_object
+        user_profile_object.save()
+        
+        self.assertEqual(len(User.objects.all()), 1, f"{FAILURE_HEADER}Expecting to see a User object created, but it didn't appear.{FAILURE_FOOTER}")
+        self.assertEqual(len(restaurant.models.UserProfile.objects.all()), 1, f"{FAILURE_HEADER} Expecting to see a UserProfile object created, but it didn't appear.{FAILURE_FOOTER}")
+        self.assertTrue(self.client.login(username='testuser', password='test123'), f"{FAILURE_HEADER}Couldn't log  sample user in during the tests.{FAILURE_FOOTER}")
+        
 class LoginTests(TestCase):
-    """
-    A series of tests for checking the login functionality of restaurant.
-    """
+    # A series of tests for checking the login functionality of restaurant.
+    
+    def test_login_functionality(self):
+        
+        # Tests the login functionality. A user should be able to log in, and should be redirected to the Restaurant homepage.
+       
+        user_object = create_user_object()
+
+        response = self.client.post(reverse('auth_login'), {'username': 'testuser', 'password': 'testabc123'})
+        
+        try:
+            self.assertEqual(user_object.id, int(self.client.session['_auth_user_id']), f"{FAILURE_HEADER}A ttempted to log a user in with an ID of {user_object.id}, but instead logged a user in with an ID of {self.client.session['_auth_user_id']}.{FAILURE_FOOTER}")
+        except KeyError:
+            self.assertTrue(False, f"{FAILURE_HEADER}When attempting to log in, it didn't seem to log the user in. {FAILURE_FOOTER}")
+
+        self.assertEqual(response.status_code, 302, f"{FAILURE_HEADER}Testing your login functionality, logging in was successful. However, we expected a redirect; we got a status code of {response.status_code} instead.{FAILURE_FOOTER}")
+        self.assertEqual(response.url, reverse('restaurant:index'), f"{FAILURE_HEADER}We were not redirected to the restaurant homepage after logging in.{FAILURE_FOOTER}")
+        
     
 
 class RestrictedAccessTests(TestCase):
-    """
-    Some tests to test the restricted access view. Can users who are not logged in see it?
-    """
+    # Some tests to test the restricted access view. Can users who are not logged in see it?
+   
     def test_restricted_url_exists(self):
-        """
-        Checks to see if the new restricted view exists in the correct place, with the correct name.
-        """
+        #Checks to see if the new restricted view exists in the correct place, with the correct name.
+        
         url = ''
 
         try:
@@ -177,22 +230,40 @@ class RestrictedAccessTests(TestCase):
         except:
             pass
         
-        self.assertEqual(url, '/restaurant/restricted/', f"{FAILURE_HEADER}Have you created the restaurant:restricted URL mapping correctly? It should point to the new restricted() view, and have a URL of '/restaurant/restricted/' Remember the first part of the URL (/restaurant/) is handled by the project's urls.py module, and the second part (restricted/) is handled by the restaurant app's urls.py module.{FAILURE_FOOTER}")
+        self.assertEqual(url, '/restaurant/restricted/', f"{FAILURE_HEADER}the restricted URL does not exist.{FAILURE_FOOTER}")
     
     def test_good_request(self):
-        """
-        Attempts to access the restricted view when logged in.
-        This should not redirect. We cannot test the content here. Only links in base.html can be checked -- we do this in the exercise tests.
-        """
+        # Attempts to access the restricted view when logged in. This should not redirect. 
+        
         create_user_object()
         self.client.login(username='testuser', password='testabc123')
 
         response = self.client.get(reverse('restaurant:restricted'))
         self.assertTrue(response.status_code, 200)
-
-
+    
 class LogoutTests(TestCase):
-    """
-    A few tests to check the functionality of logging out. Does it work? Does it actually log you out?
-    """
+    # A few tests to check the functionality of logging out
+    
+    def test_bad_request(self):
+        # Attepts to log out a user who is not logged in.
+       
+        response = self.client.get(reverse('auth_logout'))
+        self.assertTrue(response.status_code, 302)
+    
+    def test_good_request(self):
+        # Attempts to log out a user who is logged in.
+        
+        user_object = create_user_object()
+        self.client.login(username='testuser', password='testabc123')
+        
+        try:
+            self.assertEqual(user_object.id, int(self.client.session['_auth_user_id']), f"{FAILURE_HEADER}Attempted to log a user in with an ID of {user_object.id}, but instead logged a user in with an ID of {self.client.session['_auth_user_id']}. {FAILURE_FOOTER}")
+        except KeyError:
+            self.assertTrue(False, f"{FAILURE_HEADER}When attempting to log a user in, it failed.{FAILURE_FOOTER}")
+        
+        # Now log the user out.
+        response = self.client.get(reverse('auth_logout'))
+        
+        self.assertTrue('_auth_user_id' not in self.client.session, f"{FAILURE_HEADER}Logging out didn't actually log the user out.{FAILURE_FOOTER}")
+    
     

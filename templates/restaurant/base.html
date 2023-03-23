@@ -60,7 +60,6 @@
                         </div>
                     </li>
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'restaurant:restricted' %}" style="text-decoration: none;">Restricted Page</a></li>
                     <li><a href="{% url 'auth_logout' %}" style="text-decoration: none;">Logout</a></li>
                     <li><a href="{% url 'restaurant:add_menu' %}" style="text-decoration: none;">Add Menu</a></li>
                     {% else %}

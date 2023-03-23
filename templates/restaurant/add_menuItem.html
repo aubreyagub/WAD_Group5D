@@ -8,7 +8,7 @@
  {% block body_block %}
      <h1>Add a Menu Item to {{ menu.menuID }}</h1>
      <div>
-         <form id="add_menuItem_form" method="post" action="/restaurant/menu/{{ menu.slug }}/{{ menuItem.slug }}/add_menuItem/" enctype="multipart/form-data">
+         <form id="add_menuItem_form" method="post" action="/restaurant/{{ menu.slug }}/add_menuItem/" enctype="multipart/form-data">
              {% csrf_token %}
              {% for hidden in form.hidden_fields %}
                  {{ hidden }}

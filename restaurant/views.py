@@ -104,7 +104,7 @@ def show_menu_item(request, menu_name_slug, menuItem_name_slug):
     return render(request, 'restaurant/menu_item.html', context=context_dict)
 
 @login_required
-def add_menu_item(request, menu_name_slug):
+def add_menuItem(request, menu_name_slug):
     try:
         menu = Menu.objects.get(slug=menu_name_slug)
     except Menu.DoesNotExist:
@@ -121,7 +121,6 @@ def add_menu_item(request, menu_name_slug):
 
             if 'photo' in request.FILES:
                 menuItem.photo = request.FILES['photo']
-                
                 menuItem.save()
                 return redirect(reverse('restaurant:show_menu', kwargs={'menu_name_slug': menu_name_slug}))
         else:
@@ -133,6 +132,7 @@ def add_menu_item(request, menu_name_slug):
 @login_required
 def add_review(request, menu_name_slug, menuItem_name_slug):
     try:
+        menu = Menu.objects.get(slug=menu_name_slug)
         menuItem = MenuItem.objects.get(slug=menuItem_name_slug)
     except MenuItem.DoesNotExist:
         menuItem = None
@@ -145,10 +145,11 @@ def add_review(request, menu_name_slug, menuItem_name_slug):
             if menuItem:
                 review = form.save(commit=False)
                 review.menuItem = menuItem
+                review.user = request.user
                 review.save()
-                return redirect(reverse('restaurant:show_menu_item', kwargs={'menuItem_name_slug': menuItem_name_slug}))
+                return redirect(reverse('restaurant:show_menu_item', kwargs={'menu_name_slug': menu_name_slug, 'menuItem_name_slug': menuItem_name_slug}))
         else:
             print(form.errors)
 
-    context_dict = {'form': form, 'menuItem': menuItem}
+    context_dict = {'form': form, 'menu' : menu, 'menuItem': menuItem}
     return render(request, 'restaurant/add_review.html', context=context_dict)

@@ -10,14 +10,13 @@ from restaurant.forms import MenuForm, MenuItemForm, ReviewForm
 
 def index(request):
     context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
 
     visitor_cookie_handler(request)
     response = render(request, 'restaurant/index.html', context=context_dict)
     return response
 
 def about(request):
-    context_dict = {'boldmessage': 'This tutorial has been put together by Anastasiia'}
+    context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
     return render(request, 'restaurant/about.html', context=context_dict)

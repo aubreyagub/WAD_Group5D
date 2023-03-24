@@ -120,8 +120,8 @@ def add_menuItem(request, menu_name_slug):
 
             if 'photo' in request.FILES:
                 menuItem.photo = request.FILES['photo']
-                menuItem.save()
-                return redirect(reverse('restaurant:show_menu', kwargs={'menu_name_slug': menu_name_slug}))
+            menuItem.save()
+            return redirect(reverse('restaurant:show_menu', kwargs={'menu_name_slug': menu_name_slug}))
         else:
             print(form.errors)
 
@@ -145,6 +145,8 @@ def add_review(request, menu_name_slug, menuItem_name_slug):
                 review = form.save(commit=False)
                 review.menuItem = menuItem
                 review.user = request.user
+                if 'photo' in request.FILES:
+                    review.photo = request.FILES['photo']
                 review.save()
                 return redirect(reverse('restaurant:show_menu_item', kwargs={'menu_name_slug': menu_name_slug, 'menuItem_name_slug': menuItem_name_slug}))
         else:

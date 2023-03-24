@@ -19,7 +19,7 @@
             {% for review in reviews %}
             <div class="col-lg-4 d-flex align-items-stretch mb-5">
                 <div class = "card">
-                    {% if item.photo %}
+                    {% if review.photo %}
                         <img src="{{ review.photo.url }}" alt="{{ review.reviewID }} photo" class="card-img-top w-100">
                     {% endif %}
                     <div class="card-body">

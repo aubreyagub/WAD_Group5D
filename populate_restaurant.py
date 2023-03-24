@@ -20,7 +20,7 @@ def populate():
          'user_id':1,
          'comment': 'Good pasta however a bit more expensive than standard. The portion was also too small for me.',
          'ratings': 3,
-         'photo': None}
+         'photo': "population_photos/bad_spaghetti.jpg"}
     ]
     # Chicken Burger Reviews
     chickenBurger_reviews = [
@@ -52,7 +52,7 @@ def populate():
          'user_id':1,
          'comment': "Hands down one of if not THE BEST hot chocolate in the city! Bonus points for being vegan too. And the marshmallow were soooooooo good. Definitely order this if you're ever here!",
          'ratings': 5,
-         'photo': None}]
+         'photo': "population_photos/good_hot_chocolate.jpg"}]
     # Orange Juice Reviews
     oj_reviews = [
         {'reviewID': 'Fresh juice',
